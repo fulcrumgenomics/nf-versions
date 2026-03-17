@@ -102,7 +102,7 @@ The helper `collateVersions()` collates all emitted version strings into a singl
   <img src=".github/logos/fulcrumgenomics.svg" alt="Fulcrum Genomics" height="100"/>
 </a>
 
-[Visit us at Fulcrum Genomics](https://www.fulcrumgenomics.com) to learn more about how we can power your bioinformatics with nf-versions and beyond.
+[Visit us at Fulcrum Genomics](https://www.fulcrumgenomics.com) to learn how we can power your bioinformatics with nf-versions and beyond.
 
 <a href="mailto:contact@fulcrumgenomics.com?subject=[GitHub Inquiry]">
   <img src="https://img.shields.io/badge/Email_us-brightgreen.svg?&style=for-the-badge&logo=gmail&logoColor=white"/>
