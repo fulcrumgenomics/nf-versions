@@ -10,7 +10,7 @@ Collect CLI tool version information from Nextflow processes and collate it for 
   <img src=".github/logos/fulcrumgenomics.svg" alt="Fulcrum Genomics" height="100"/>
 </a>
 
-[Visit us at Fulcrum Genomics](https://www.fulcrumgenomics.com) to learn more about how we can power your Bioinformatics with nf-versions and beyond.
+[Visit us at Fulcrum Genomics](https://www.fulcrumgenomics.com) to learn more about how we can power your bioinformatics with nf-versions and beyond.
 
 <a href="mailto:contact@fulcrumgenomics.com?subject=[GitHub Inquiry]">
   <img src="https://img.shields.io/badge/Email_us-brightgreen.svg?&style=for-the-badge&logo=gmail&logoColor=white"/>
@@ -63,7 +63,7 @@ workflow {
     // ... pipeline logic ... //
 
     def qc = channel.empty()
-    qc = qc.mix(channel.topic("for_multiqc"))  // other MultiQC inputs
+    qc = qc.mix(channel.topic("for_multiqc"))
     qc = qc.mix(VersionFor.all(channel.topic("versions")))
 
     MULTIQC(qc.collect())
@@ -79,8 +79,8 @@ The helper `VersionFor.all()` collates all emitted version strings into a single
 | `VersionFor.Bcftools`  | [bcftools](https://samtools.github.io/bcftools/)     |
 | `VersionFor.BwaMem2`   | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)     |
 | `VersionFor.Fgbio`     | [fgbio](https://github.com/fulcrumgenomics/fgbio)    |
-| `VersionFor.Falco`     | [Falco](https://github.com/smithlabcode/falco)       |
-| `VersionFor.Picard`    | [Picard](https://broadinstitute.github.io/picard/)   |
+| `VersionFor.Falco`     | [falco](https://github.com/smithlabcode/falco)       |
+| `VersionFor.Picard`    | [picard](https://broadinstitute.github.io/picard/)   |
 | `VersionFor.Samtools`  | [samtools](https://www.htslib.org/)                  |
 | `VersionFor.Splitcode` | [splitcode](https://github.com/salzmanlab/splitcode) |
 
