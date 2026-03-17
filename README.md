@@ -8,11 +8,9 @@ Collect CLI tool version information from Nextflow processes and collate it for 
 
 ## Overview
 
-`nf-versions` provides helpers for capturing tool version information in Nextflow workflows.
-
 Version strings are bash `echo` commands designed for use with Nextflow's `eval` output directive.
 They produce YAML-formatted lines that MultiQC can read directly.
-These helpers avoid the need to continuously and verbosely specify version strings in both script and stub blocks (see [example here](https://github.com/nf-core/fastquorum/blob/e6414c99ef5eef47a4ac3f124962e3dc5c21ab4b/modules/local/fgbio/fastqtobam/main.nf#L46-L61)).
+These helpers avoid the need to continuously and verbosely specify version strings in both script and stub blocks (see an [example here](https://github.com/nf-core/fastquorum/blob/e6414c99ef5eef47a4ac3f124962e3dc5c21ab4b/modules/local/fgbio/fastqtobam/main.nf#L46-L61)).
 Contributions for new tool version support are greatly appreciated!
 
 ## Quickstart
@@ -23,7 +21,7 @@ Add the plugin to your Nextflow config:
 plugins { id 'nf-versions' }
 ```
 
-### Using the Version Functions in Nextflow Processes
+### Version Functions in Nextflow Processes
 
 Import the version functions and assign them at the module level before the process block.
 Nextflow's process body uses delegate-only method resolution, so the functions must be called
@@ -43,27 +41,6 @@ process ALIGN {
     """
 }
 ```
-
-### Collating Versions for MultiQC
-
-In your main workflow, mix the `versions` topic channel through `collateVersions()` before passing it to MultiQC:
-
-```nextflow
-include { MULTIQC } from './modules/multiqc'
-include { collateVersions } from 'plugin/nf-versions'
-
-workflow {
-    // ... pipeline logic ... //
-
-    def qc = channel.empty()
-    qc = qc.mix(channel.topic("for_multiqc"))
-    qc = qc.mix(collateVersions(channel.topic("versions")))
-
-    MULTIQC(qc.collect())
-}
-```
-
-The helper `collateVersions()` collates all emitted version strings into a single `all_mqc_versions.yml` file in a format that MultiQC expects.
 
 <details>
 <summary>**Click to see all Supported Tools**</summary>
@@ -97,6 +74,27 @@ process SECRET_SAUCE {
     """
 }
 ```
+
+### Collating Versions for MultiQC
+
+In your main workflow, mix the `versions` topic channel through `collateVersions()` before passing it to MultiQC:
+
+```nextflow
+include { MULTIQC } from './modules/multiqc'
+include { collateVersions } from 'plugin/nf-versions'
+
+workflow {
+    // ... pipeline logic ... //
+
+    def qc = channel.empty()
+    qc = qc.mix(channel.topic("for_multiqc"))
+    qc = qc.mix(collateVersions(channel.topic("versions")))
+
+    MULTIQC(qc.collect())
+}
+```
+
+The helper `collateVersions()` collates all emitted version strings into a single `all_mqc_versions.yml` file in a format that MultiQC expects.
 
 ## Made by Fulcrum Genomics
 
