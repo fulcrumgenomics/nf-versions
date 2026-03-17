@@ -23,8 +23,11 @@ Collect CLI tool version information from Nextflow processes and collate it for 
 
 `nf-versions` provides helpers for capturing tool version information in Nextflow workflows.
 
+
 Version strings are bash `echo` commands designed for use with Nextflow's `eval` output directive.
 They produce YAML-formatted lines that MultiQC can read directly.
+These helpers avoid the need to continuously and verbosely specify version strings in both script and stub blocks (see [example here](https://github.com/nf-core/fastquorum/blob/e6414c99ef5eef47a4ac3f124962e3dc5c21ab4b/modules/local/fgbio/fastqtobam/main.nf#L46-L61)).
+Contributions for new tool version support are greatly appreciated!
 
 ## Quickstart
 
