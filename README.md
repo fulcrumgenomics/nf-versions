@@ -23,17 +23,13 @@ plugins { id 'nf-versions' }
 
 ### Version Functions in Nextflow Processes
 
-Import the version functions and assign them at the module level before the process block.
-Nextflow's process body uses delegate-only method resolution, so the functions must be called
-outside the process and the resulting command strings captured in variables:
-
 ```nextflow
 include { bwaMem2Version; samtoolsVersion } from 'plugin/nf-versions'
 
 process ALIGN {
     output:
-    eval({ bwaMem2Version() }), topic: "versions"
-    eval({ samtoolsVersion() }), topic: "versions"
+    eval({bwaMem2Version()}), topic: "versions"
+    eval({samtoolsVersion()}), topic: "versions"
 
     script:
     """
@@ -59,14 +55,14 @@ process ALIGN {
 
 ## Custom Python Libraries and Tools
 
-If you have a custom Python tool or library, you can collect its version with `pyPackageVersion()`:
+Use `pyPackageVersion()` for custom Python tools or libraries:
 
 ```nextflow
 include { pyPackageVersion } from 'plugin/nf-versions'
 
 process SECRET_SAUCE {
     output:
-    eval({ pyPackageVersion("secret_sauce_lib") }), topic: "versions"
+    eval({pyPackageVersion("secret_sauce_lib")}), topic: "versions"
 
     script:
     """
@@ -77,7 +73,7 @@ process SECRET_SAUCE {
 
 ### Collating Versions for MultiQC
 
-In your main workflow, mix the `versions` topic channel through `collateVersions()` before passing it to MultiQC:
+In your workflow, mix the `versions` topic channel through `collateVersions()` before passing to MultiQC:
 
 ```nextflow
 include { MULTIQC } from './modules/multiqc'
@@ -93,8 +89,6 @@ workflow {
     MULTIQC(qc.collect())
 }
 ```
-
-The helper `collateVersions()` collates all emitted version strings into a single `all_mqc_versions.yml` file in a format that MultiQC expects.
 
 ## Made by Fulcrum Genomics
 
