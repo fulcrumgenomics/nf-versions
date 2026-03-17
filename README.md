@@ -55,7 +55,7 @@ process ALIGN {
 | `samtoolsVersion()` | [samtools](https://www.htslib.org/)                  |
 | `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode) |
 
-</detail>
+</details>
 
 ## Custom Python Libraries and Tools
 
