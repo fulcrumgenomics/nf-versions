@@ -3,6 +3,9 @@ channels = ["conda-forge", "bioconda"]
 name = "nf-versions"
 platforms = ["linux-64", "osx-64", "osx-arm64"]
 
+[dependencies]
+openjdk = "~=21.0"
+
 [activation.env]
 JAVA_HOME = "${PIXI_PROJECT_ROOT}/.pixi/envs/${PIXI_ENVIRONMENT_NAME}/lib/jvm"
 PATH = "${PIXI_PROJECT_ROOT}/.pixi/envs/${PIXI_ENVIRONMENT_NAME}/lib/jvm/bin:$PATH"
