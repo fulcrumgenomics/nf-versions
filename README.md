@@ -43,7 +43,7 @@ process ALIGN {
 ```
 
 <details>
-<summary>**Click to see all Supported Tools**</summary>
+<summary><b>Click to see all Supported Tools</b></summary>
 
 | Plugin Function     | Tool                                                 |
 | ---                 | ---                                                  |
