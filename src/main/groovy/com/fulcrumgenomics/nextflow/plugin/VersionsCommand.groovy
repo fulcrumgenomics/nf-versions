@@ -17,6 +17,11 @@ class VersionsCommand {
         echo 'bwa-mem2: "'\$( bwa-mem2 version )'"'
     """.stripIndent()
 
+    /** Bash command to return the version of falco. */
+    public static final String Falco = """
+        echo 'falco: "'\$( falco --version | sed -e 's/falco //g' )'"'
+    """.stripIndent()
+
     /** Bash command to return the version of fgbio. */
     public static final String Fgbio = """
         echo 'fgbio: "'\$(
@@ -24,11 +29,6 @@ class VersionsCommand {
             | tr -d '[:cntrl:]' \
             | sed -e 's/^.*Version: //' -e 's/\\[.*\$//'
         )'"'
-    """.stripIndent()
-
-    /** Bash command to return the version of falco. */
-    public static final String Falco = """
-        echo 'falco: "'\$( falco --version | sed -e 's/falco //g' )'"'
     """.stripIndent()
 
     /** Bash command to return the version of picard. */
@@ -45,6 +45,24 @@ class VersionsCommand {
     public static final String Splitcode = """
         echo 'splitcode: "'\$( splitcode --version | sed -e 's/splitcode, version //g' | sed 's/\\.\$//' )'"'
     """.stripIndent()
+
+    /**
+      * Returns a bash command that emits the version of a Python package using importlib.metadata.
+      * The output is formatted as a YAML string: {@code package-name: "x.y.z"}.
+      *
+      * @param packageName the importlib-resolvable distribution name (e.g. {@code "cutadapt"})
+      * @return a bash command string suitable for use in a Nextflow process {@code script} block
+      */
+    static String pyPackageVersion(String packageName) {
+        if (!packageName.matches(/[A-Za-z0-9._-]+/)) {
+            throw new IllegalArgumentException(
+                "Invalid Python package name '${packageName}': only letters, digits, hyphens, underscores, and dots are allowed (PEP 508)."
+            )
+        }
+        return """
+            echo '${packageName}: "'\$( python3 -c 'import sys; from importlib.metadata import version; print(version(sys.argv[1]))' ${packageName} 2>&1 )'"'
+        """.stripIndent()
+    }
 
     /** Prepend a string prefix and indent all later elements by a given number of spaces. */
     static String indent(String element, int indentBy = 2) {

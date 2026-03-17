@@ -7,6 +7,9 @@ platforms = ["linux-64", "osx-64", "osx-arm64"]
 JAVA_HOME = "${PIXI_PROJECT_ROOT}/.pixi/envs/${PIXI_ENVIRONMENT_NAME}/lib/jvm"
 PATH = "${PIXI_PROJECT_ROOT}/.pixi/envs/${PIXI_ENVIRONMENT_NAME}/lib/jvm/bin:$PATH"
 
+[feature.cutadapt.dependencies]
+cutadapt = { version = "==4.9", channel = "bioconda" }
+
 [feature.bcftools.dependencies]
 bcftools = { version = "==1.23", channel = "bioconda" }
 
@@ -29,6 +32,7 @@ samtools = { version = "==1.23", channel = "bioconda" }
 splitcode = { version = "==0.31.6", channel = "bioconda" }
 
 [environments]
+cutadapt = { features = ["cutadapt"] }
 bcftools = { features = ["bcftools"] }
 bwa-mem2 = { features = ["bwa-mem2"] }
 falco = { features = ["falco"] }

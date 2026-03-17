@@ -21,13 +21,13 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String bwaMem2Version() { return VersionsCommand.BwaMem2 }
 
-    /** Bash command to return the version of fgbio. */
-    @Function
-    String fgbioVersion() { return VersionsCommand.Fgbio }
-
     /** Bash command to return the version of falco. */
     @Function
     String falcoVersion() { return VersionsCommand.Falco }
+
+    /** Bash command to return the version of fgbio. */
+    @Function
+    String fgbioVersion() { return VersionsCommand.Fgbio }
 
     /** Bash command to return the version of picard. */
     @Function
@@ -40,6 +40,16 @@ class VersionsExtension extends PluginExtensionPoint {
     /** Bash command to return the version of splitcode. */
     @Function
     String splitcodeVersion() { return VersionsCommand.Splitcode }
+
+    /**
+     * Returns a bash command that emits the version of a Python package using importlib.metadata.
+     * The output is formatted as a YAML string: {@code package-name: "x.y.z"}.
+     *
+     * @param packageName the importlib-resolvable distribution name (e.g. {@code "cutadapt"})
+     * @return a bash command string suitable for use in a Nextflow process {@code script} block
+     */
+    @Function
+    String pyPackageVersion(String packageName) { return VersionsCommand.pyPackageVersion(packageName) }
 
     /** Collect all versions into a file that MultiQC expects. */
     @CompileDynamic

@@ -28,6 +28,12 @@ class VersionsPixiTest extends Specification {
         return proc.inputStream.text.trim()
     }
 
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('cutadapt') })
+    def 'VersionsCommand.pyPackageVersion("cutadapt") should output cutadapt: "4.9" in the cutadapt pixi environment'() {
+        expect:
+            runInPixiEnv('cutadapt', VersionsCommand.pyPackageVersion('cutadapt')) == 'cutadapt: "4.9"'
+    }
+
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('bcftools') })
     def 'VersionsCommand.Bcftools should output bcftools: "1.23" in the bcftools pixi environment'() {
         expect:

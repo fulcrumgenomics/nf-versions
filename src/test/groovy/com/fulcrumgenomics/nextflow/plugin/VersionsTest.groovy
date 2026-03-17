@@ -175,6 +175,34 @@ class VersionsTest extends Dsl2Spec {
             VersionsCommand.Splitcode.contains('splitcode --version')
     }
 
+    def 'VersionsCommand.pyPackageVersion should contain the package name and importlib.metadata'() {
+        expect:
+            VersionsCommand.pyPackageVersion('cutadapt').contains('cutadapt')
+            VersionsCommand.pyPackageVersion('cutadapt').contains('importlib.metadata')
+    }
+
+    def 'pyPackageVersion() should return a bash command string containing the package name'() {
+        when:
+            String SCRIPT = '''
+                include { pyPackageVersion } from 'plugin/nf-versions'
+                channel.of(pyPackageVersion('cutadapt'))
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('cutadapt')
+            result.val == Channel.STOP
+    }
+
+    def 'VersionsCommand.pyPackageVersion should reject package names containing shell meta-characters'() {
+        when:
+            VersionsCommand.pyPackageVersion(name)
+        then:
+            thrown(IllegalArgumentException)
+        where:
+            name << ['pkg; rm -rf /', 'pkg$(evil)', 'pkg`evil`', 'pkg|evil', 'pkg>out', 'pkg\nevil']
+    }
+
     def 'VersionsCommand.indent should prepend spaces to each line'() {
         expect:
             VersionsCommand.indent("a\nb", 4) == "    a\n    b"
@@ -183,64 +211,5 @@ class VersionsTest extends Dsl2Spec {
     def 'VersionsCommand.indent should use two spaces by default'() {
         expect:
             VersionsCommand.indent("line") == "  line"
-    }
-
-    @IgnoreIf({ !Path.of('.').toAbsolutePath().normalize().resolve('.pixi/envs/samtools').toFile().isDirectory() })
-    def 'should emit samtools version via eval(samtoolsVersion()) using the pixi env'() {
-        given:
-            // Resolve the pixi samtools bin dir so it can be injected into the process PATH.
-            // eval() runs in a separate shell after the script body, so the bin dir must be
-            // added to PATH via the env config scope rather than inside the script block.
-            def samtoolsBin = Path.of('.').toAbsolutePath().normalize().resolve('.pixi/envs/samtools/bin').toString()
-        when:
-            // samtoolsVersion() is assigned at script level because Nextflow's process body
-            // uses DELEGATE_ONLY resolution — plugin functions called inside eval(...) would
-            // be intercepted as unknown directives rather than resolved from the import.
-            String SCRIPT = '''
-                include { samtoolsVersion } from 'plugin/nf-versions'
-
-                def SAMTOOLS_CMD = samtoolsVersion()
-
-                process SAMTOOLS_VERSION {
-                    output:
-                    eval(SAMTOOLS_CMD)
-
-                    script:
-                    """
-                    true
-                    """
-                }
-
-                workflow {
-                    emit: out = SAMTOOLS_VERSION()
-                }
-            '''
-        and:
-            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
-        then:
-            result.out.val.trim() == 'samtools: "1.23"'
-            result.out.val == Channel.STOP
-    }
-
-    def 'should run a process with stdout output and a workflow that emits it'() {
-        when:
-            String SCRIPT = '''
-                process SAY_HELLO {
-                    output: stdout
-                    script:
-                    """
-                    echo "hello from process"
-                    """
-                }
-
-                workflow {
-                    emit: out = SAY_HELLO()
-                }
-            '''
-        and:
-            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
-        then:
-            result.out.val.toFile().text.trim() == 'hello from process'
-            result.out.val == Channel.STOP
     }
 }

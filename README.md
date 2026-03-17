@@ -30,15 +30,12 @@ Nextflow's process body uses delegate-only method resolution, so the functions m
 outside the process and the resulting command strings captured in variables:
 
 ```nextflow
-include { bwaMem2Version; samtoolsVersion; collateVersions } from 'plugin/nf-versions'
-
-def BWA_MEM2_CMD = bwaMem2Version()
-def SAMTOOLS_CMD = samtoolsVersion()
+include { bwaMem2Version; samtoolsVersion } from 'plugin/nf-versions'
 
 process ALIGN {
     output:
-    eval(BWA_MEM2_CMD), topic: "versions"
-    eval(SAMTOOLS_CMD), topic: "versions"
+    eval({ bwaMem2Version() }), topic: "versions"
+    eval({ samtoolsVersion() }), topic: "versions"
 
     script:
     """
@@ -68,17 +65,35 @@ workflow {
 
 The helper `collateVersions()` collates all emitted version strings into a single `all_mqc_versions.yml` file in a format that MultiQC expects.
 
+## Custom Python Libraries and Tools
+
+If you have a custom Python tool or library, you can collect its version with `pyPackageVersion()`:
+
+```nextflow
+include { pyPackageVersion } from 'plugin/nf-versions'
+
+process SECRET_SAUCE {
+    output:
+    eval({ pyPackageVersion("secret_sauce_lib") }), topic: "versions"
+
+    script:
+    """
+    secret-sauce.py ...
+    """
+}
+```
+
 ## Supported Tools
 
-| Plugin Function         | `VersionsCommand` Constant        | Tool                                                 |
-| ---                     | ---                               | ---                                                  |
-| `bcftoolsVersion()`     | `VersionsCommand.Bcftools`        | [bcftools](https://samtools.github.io/bcftools/)     |
-| `bwaMem2Version()`      | `VersionsCommand.BwaMem2`         | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)     |
-| `falcoVersion()`        | `VersionsCommand.Falco`           | [falco](https://github.com/smithlabcode/falco)       |
-| `fgbioVersion()`        | `VersionsCommand.Fgbio`           | [fgbio](https://github.com/fulcrumgenomics/fgbio)    |
-| `picardVersion()`       | `VersionsCommand.Picard`          | [picard](https://broadinstitute.github.io/picard/)   |
-| `samtoolsVersion()`     | `VersionsCommand.Samtools`        | [samtools](https://www.htslib.org/)                  |
-| `splitcodeVersion()`    | `VersionsCommand.Splitcode`       | [splitcode](https://github.com/salzmanlab/splitcode) |
+| Plugin Function     | Tool                                                 |
+| ---                 | ---                                                  |
+| `bcftoolsVersion()` | [bcftools](https://samtools.github.io/bcftools/)     |
+| `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)     |
+| `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)       |
+| `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)    |
+| `picardVersion()`   | [picard](https://broadinstitute.github.io/picard/)   |
+| `samtoolsVersion()` | [samtools](https://www.htslib.org/)                  |
+| `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode) |
 
 ## Made by Fulcrum Genomics
 
