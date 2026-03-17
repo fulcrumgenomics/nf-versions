@@ -1,0 +1,9 @@
+.DS_Store
+.gradle
+.idea
+.java-version
+.nextflow*
+.pixi/
+build/
+out/
+work/

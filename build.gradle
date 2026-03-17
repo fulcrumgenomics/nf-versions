@@ -1,0 +1,28 @@
+plugins {
+    id 'io.nextflow.nextflow-plugin' version '1.0.0-beta.14'
+}
+
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+dependencies {
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+nextflowPlugin {
+    nextflowVersion = '25.10.0'
+    provider = 'Fulcrum Genomics LLC'
+    className = 'com.fulcrumgenomics.nextflow.plugin.VersionsPlugin'
+    extensionPoints = [
+        'com.fulcrumgenomics.nextflow.plugin.VersionsExtension'
+    ]
+}
