@@ -6,6 +6,7 @@ import nextflow.plugin.TestPluginDescriptorFinder
 import nextflow.plugin.TestPluginManager
 import nextflow.plugin.extension.PluginExtensionProvider
 import org.pf4j.PluginDescriptorFinder
+import spock.lang.IgnoreIf
 import spock.lang.Shared
 import test.Dsl2Spec
 import test.MockScriptRunner
@@ -77,7 +78,7 @@ class VersionsTest extends Dsl2Spec {
     def 'should import the plugin and not raise an exception'() {
         when:
             String SCRIPT = '''
-                include { all } from 'plugin/nf-versions'
+                include { collateVersions } from 'plugin/nf-versions'
                 channel.of('hi-mom')
             '''
         and:
@@ -87,11 +88,11 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'bcftools() should return a bash command string for bcftools'() {
+    def 'bcftoolsVersion() should return a bash command string for bcftools'() {
         when:
             String SCRIPT = '''
-                include { bcftools } from 'plugin/nf-versions'
-                channel.of(bcftools())
+                include { bcftoolsVersion } from 'plugin/nf-versions'
+                channel.of(bcftoolsVersion())
             '''
         and:
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
@@ -100,11 +101,11 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'samtools() should return a bash command string for samtools'() {
+    def 'samtoolsVersion() should return a bash command string for samtools'() {
         when:
             String SCRIPT = '''
-                include { samtools } from 'plugin/nf-versions'
-                channel.of(samtools())
+                include { samtoolsVersion } from 'plugin/nf-versions'
+                channel.of(samtoolsVersion())
             '''
         and:
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
@@ -113,11 +114,11 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'fgbio() should return a bash command string for fgbio'() {
+    def 'fgbioVersion() should return a bash command string for fgbio'() {
         when:
             String SCRIPT = '''
-                include { fgbio } from 'plugin/nf-versions'
-                channel.of(fgbio())
+                include { fgbioVersion } from 'plugin/nf-versions'
+                channel.of(fgbioVersion())
             '''
         and:
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
@@ -126,11 +127,11 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'picard() should return a bash command string for picard'() {
+    def 'picardVersion() should return a bash command string for picard'() {
         when:
             String SCRIPT = '''
-                include { picard } from 'plugin/nf-versions'
-                channel.of(picard())
+                include { picardVersion } from 'plugin/nf-versions'
+                channel.of(picardVersion())
             '''
         and:
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
@@ -139,48 +140,107 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'VersionFor.Bcftools should contain the bcftools version command'() {
+    def 'VersionsCommand.Bcftools should contain the bcftools version command'() {
         expect:
-            VersionFor.Bcftools.contains('bcftools --version')
+            VersionsCommand.Bcftools.contains('bcftools --version')
     }
 
-    def 'VersionFor.BwaMem2 should contain the bwa-mem2 version command'() {
+    def 'VersionsCommand.BwaMem2 should contain the bwa-mem2 version command'() {
         expect:
-            VersionFor.BwaMem2.contains('bwa-mem2 version')
+            VersionsCommand.BwaMem2.contains('bwa-mem2 version')
     }
 
-    def 'VersionFor.Fgbio should contain the fgbio version command'() {
+    def 'VersionsCommand.Fgbio should contain the fgbio version command'() {
         expect:
-            VersionFor.Fgbio.contains('fgbio --version')
+            VersionsCommand.Fgbio.contains('fgbio --version')
     }
 
-    def 'VersionFor.Falco should contain the falco version command'() {
+    def 'VersionsCommand.Falco should contain the falco version command'() {
         expect:
-            VersionFor.Falco.contains('falco --version')
+            VersionsCommand.Falco.contains('falco --version')
     }
 
-    def 'VersionFor.Picard should contain the picard version command'() {
+    def 'VersionsCommand.Picard should contain the picard version command'() {
         expect:
-            VersionFor.Picard.contains('picard ViewSam')
+            VersionsCommand.Picard.contains('picard ViewSam')
     }
 
-    def 'VersionFor.Samtools should contain the samtools version command'() {
+    def 'VersionsCommand.Samtools should contain the samtools version command'() {
         expect:
-            VersionFor.Samtools.contains('samtools --version')
+            VersionsCommand.Samtools.contains('samtools --version')
     }
 
-    def 'VersionFor.Splitcode should contain the splitcode version command'() {
+    def 'VersionsCommand.Splitcode should contain the splitcode version command'() {
         expect:
-            VersionFor.Splitcode.contains('splitcode --version')
+            VersionsCommand.Splitcode.contains('splitcode --version')
     }
 
-    def 'VersionFor.indent should prepend spaces to each line'() {
+    def 'VersionsCommand.indent should prepend spaces to each line'() {
         expect:
-            VersionFor.indent("a\nb", 4) == "    a\n    b"
+            VersionsCommand.indent("a\nb", 4) == "    a\n    b"
     }
 
-    def 'VersionFor.indent should use two spaces by default'() {
+    def 'VersionsCommand.indent should use two spaces by default'() {
         expect:
-            VersionFor.indent("line") == "  line"
+            VersionsCommand.indent("line") == "  line"
+    }
+
+    @IgnoreIf({ !Path.of('.').toAbsolutePath().normalize().resolve('.pixi/envs/samtools').toFile().isDirectory() })
+    def 'should emit samtools version via eval(samtoolsVersion()) using the pixi env'() {
+        given:
+            // Resolve the pixi samtools bin dir so it can be injected into the process PATH.
+            // eval() runs in a separate shell after the script body, so the bin dir must be
+            // added to PATH via the env config scope rather than inside the script block.
+            def samtoolsBin = Path.of('.').toAbsolutePath().normalize().resolve('.pixi/envs/samtools/bin').toString()
+        when:
+            // samtoolsVersion() is assigned at script level because Nextflow's process body
+            // uses DELEGATE_ONLY resolution — plugin functions called inside eval(...) would
+            // be intercepted as unknown directives rather than resolved from the import.
+            String SCRIPT = '''
+                include { samtoolsVersion } from 'plugin/nf-versions'
+
+                def SAMTOOLS_CMD = samtoolsVersion()
+
+                process SAMTOOLS_VERSION {
+                    output:
+                    eval(SAMTOOLS_CMD)
+
+                    script:
+                    """
+                    true
+                    """
+                }
+
+                workflow {
+                    emit: out = SAMTOOLS_VERSION()
+                }
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            result.out.val.trim() == 'samtools: "1.23"'
+            result.out.val == Channel.STOP
+    }
+
+    def 'should run a process with stdout output and a workflow that emits it'() {
+        when:
+            String SCRIPT = '''
+                process SAY_HELLO {
+                    output: stdout
+                    script:
+                    """
+                    echo "hello from process"
+                    """
+                }
+
+                workflow {
+                    emit: out = SAY_HELLO()
+                }
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            result.out.val.toFile().text.trim() == 'hello from process'
+            result.out.val == Channel.STOP
     }
 }

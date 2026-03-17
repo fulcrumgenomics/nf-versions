@@ -5,7 +5,7 @@ import groovy.transform.CompileStatic
 
 /** Command strings for determining the versions of various tools. */
 @CompileStatic
-class VersionFor {
+class VersionsCommand {
 
     /** Bash command to return the version of bcftools. */
     public static final String Bcftools = """
@@ -53,7 +53,7 @@ class VersionFor {
 
     /** Collect all versions into a file that MultiQC expects. */
     @CompileDynamic
-    static def all(def ch_versions, String prefix = "", int indentRestBy = 0) {
+    static def collate(def ch_versions, String prefix = "", int indentRestBy = 0) {
         return ch_versions
             .map { indent(it as String, indentRestBy) }
             .collectFile(name: "all_mqc_versions.yml", newLine: true, seed: prefix)

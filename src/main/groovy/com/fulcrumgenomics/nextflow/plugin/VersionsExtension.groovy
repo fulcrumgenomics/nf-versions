@@ -15,36 +15,36 @@ class VersionsExtension extends PluginExtensionPoint {
 
     /** Bash command to return the version of bcftools. */
     @Function
-    String bcftools() { return VersionFor.Bcftools }
+    String bcftoolsVersion() { return VersionsCommand.Bcftools }
 
     /** Bash command to return the version of bwa-mem2. */
     @Function
-    String bwaMem2() { return VersionFor.BwaMem2 }
+    String bwaMem2Version() { return VersionsCommand.BwaMem2 }
 
     /** Bash command to return the version of fgbio. */
     @Function
-    String fgbio() { return VersionFor.Fgbio }
+    String fgbioVersion() { return VersionsCommand.Fgbio }
 
     /** Bash command to return the version of falco. */
     @Function
-    String falco() { return VersionFor.Falco }
+    String falcoVersion() { return VersionsCommand.Falco }
 
     /** Bash command to return the version of picard. */
     @Function
-    String picard() { return VersionFor.Picard }
+    String picardVersion() { return VersionsCommand.Picard }
 
     /** Bash command to return the version of samtools. */
     @Function
-    String samtools() { return VersionFor.Samtools }
+    String samtoolsVersion() { return VersionsCommand.Samtools }
 
     /** Bash command to return the version of splitcode. */
     @Function
-    String splitcode() { return VersionFor.Splitcode }
+    String splitcodeVersion() { return VersionsCommand.Splitcode }
 
     /** Collect all versions into a file that MultiQC expects. */
     @CompileDynamic
     @Function
-    def all(def ch_versions, String prefix = "", int indentRestBy = 0) {
-        return VersionFor.all(ch_versions, prefix, indentRestBy)
+    def collateVersions(def ch_versions, String prefix = "", int indentRestBy = 0) {
+        return VersionsCommand.collate(ch_versions, prefix, indentRestBy)
     }
 }
