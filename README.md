@@ -53,7 +53,7 @@ process ALIGN {
 
 </details>
 
-## Custom Python Libraries and Tools
+### Custom Python Libraries and Tools
 
 Use `pyPackageVersion()` for custom Python tools or libraries:
 
