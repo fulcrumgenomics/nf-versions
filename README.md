@@ -65,6 +65,21 @@ workflow {
 
 The helper `collateVersions()` collates all emitted version strings into a single `all_mqc_versions.yml` file in a format that MultiQC expects.
 
+<details>
+<summary>**Click to see all Supported Tools**</summary>
+
+| Plugin Function     | Tool                                                 |
+| ---                 | ---                                                  |
+| `bcftoolsVersion()` | [bcftools](https://samtools.github.io/bcftools/)     |
+| `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)     |
+| `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)       |
+| `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)    |
+| `picardVersion()`   | [picard](https://broadinstitute.github.io/picard/)   |
+| `samtoolsVersion()` | [samtools](https://www.htslib.org/)                  |
+| `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode) |
+
+</detail>
+
 ## Custom Python Libraries and Tools
 
 If you have a custom Python tool or library, you can collect its version with `pyPackageVersion()`:
@@ -82,18 +97,6 @@ process SECRET_SAUCE {
     """
 }
 ```
-
-## Supported Tools
-
-| Plugin Function     | Tool                                                 |
-| ---                 | ---                                                  |
-| `bcftoolsVersion()` | [bcftools](https://samtools.github.io/bcftools/)     |
-| `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)     |
-| `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)       |
-| `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)    |
-| `picardVersion()`   | [picard](https://broadinstitute.github.io/picard/)   |
-| `samtoolsVersion()` | [samtools](https://www.htslib.org/)                  |
-| `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode) |
 
 ## Made by Fulcrum Genomics
 
