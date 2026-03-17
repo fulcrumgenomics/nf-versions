@@ -1,0 +1,45 @@
+[workspace]
+channels = ["conda-forge", "bioconda"]
+name = "nf-versions"
+platforms = ["linux-64", "osx-64", "osx-arm64"]
+
+[dependencies]
+openjdk = "~=21.0"
+
+[activation.env]
+JAVA_HOME = "${PIXI_PROJECT_ROOT}/.pixi/envs/${PIXI_ENVIRONMENT_NAME}/lib/jvm"
+PATH = "${PIXI_PROJECT_ROOT}/.pixi/envs/${PIXI_ENVIRONMENT_NAME}/lib/jvm/bin:$PATH"
+
+[feature.cutadapt.dependencies]
+cutadapt = { version = "==4.9", channel = "bioconda" }
+
+[feature.bcftools.dependencies]
+bcftools = { version = "==1.23", channel = "bioconda" }
+
+[feature.bwa-mem2.dependencies]
+bwa-mem2 = { version = "==2.2.1", channel = "bioconda" }
+
+[feature.falco.dependencies]
+falco = { version = "==1.2.5", channel = "bioconda" }
+
+[feature.fgbio.dependencies]
+fgbio = { version = "==3.1.2", channel = "bioconda" }
+
+[feature.picard.dependencies]
+picard = { version = "==3.4.0", channel = "bioconda" }
+
+[feature.samtools.dependencies]
+samtools = { version = "==1.23", channel = "bioconda" }
+
+[feature.splitcode.dependencies]
+splitcode = { version = "==0.31.6", channel = "bioconda" }
+
+[environments]
+cutadapt = { features = ["cutadapt"] }
+bcftools = { features = ["bcftools"] }
+bwa-mem2 = { features = ["bwa-mem2"] }
+falco = { features = ["falco"] }
+fgbio = { features = ["fgbio"] }
+picard = { features = ["picard"] }
+samtools = { features = ["samtools"] }
+splitcode = { features = ["splitcode"] }
