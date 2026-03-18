@@ -29,50 +29,50 @@ class VersionsPixiTest extends Specification {
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('cutadapt') })
-    def 'VersionsCommand.pyPackageVersion("cutadapt") should output cutadapt: "4.9" in the cutadapt pixi environment'() {
+    def 'pyPackageVersion("cutadapt") should output cutadapt: "4.9" in the cutadapt pixi environment'() {
         expect:
-            runInPixiEnv('cutadapt', VersionsCommand.pyPackageVersion('cutadapt')) == 'cutadapt: "4.9"'
+            runInPixiEnv('cutadapt', new VersionsExtension().pyPackageVersion('cutadapt')) == 'cutadapt: "4.9"'
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('bcftools') })
-    def 'VersionsCommand.Bcftools should output bcftools: "1.23" in the bcftools pixi environment'() {
+    def 'bcftoolsVersion() should output bcftools: "1.23" in the bcftools pixi environment'() {
         expect:
-            runInPixiEnv('bcftools', VersionsCommand.Bcftools) == 'bcftools: "1.23"'
+            runInPixiEnv('bcftools', new VersionsExtension().bcftoolsVersion()) == 'bcftools: "1.23"'
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('bwa-mem2') })
-    def 'VersionsCommand.BwaMem2 should output bwa-mem2: "2.2.1" in the bwa-mem2 pixi environment'() {
+    def 'bwaMem2Version() should output bwa-mem2: "2.2.1" in the bwa-mem2 pixi environment'() {
         expect:
-            runInPixiEnv('bwa-mem2', VersionsCommand.BwaMem2) == 'bwa-mem2: "2.2.1"'
+            runInPixiEnv('bwa-mem2', new VersionsExtension().bwaMem2Version()) == 'bwa-mem2: "2.2.1"'
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('falco') })
-    def 'VersionsCommand.Falco should output falco: "1.2.5" in the falco pixi environment'() {
+    def 'falcoVersion() should output falco: "1.2.5" in the falco pixi environment'() {
         expect:
-            runInPixiEnv('falco', VersionsCommand.Falco) == 'falco: "1.2.5"'
+            runInPixiEnv('falco', new VersionsExtension().falcoVersion()) == 'falco: "1.2.5"'
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('fgbio') })
-    def 'VersionsCommand.Fgbio should output fgbio: "3.1.2" in the fgbio pixi environment'() {
+    def 'fgbioVersion() should output fgbio: "3.1.2" in the fgbio pixi environment'() {
         expect:
-            runInPixiEnv('fgbio', VersionsCommand.Fgbio) ==~ /fgbio: "3\.1\.2\s*"/
+            runInPixiEnv('fgbio', new VersionsExtension().fgbioVersion()) ==~ /fgbio: "3\.1\.2\s*"/
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('picard') })
-    def 'VersionsCommand.Picard should output picard: "3.4.0" in the picard pixi environment'() {
+    def 'picardVersion() should output picard: "3.4.0" in the picard pixi environment'() {
         expect:
-            runInPixiEnv('picard', VersionsCommand.Picard) == 'picard: "3.4.0"'
+            runInPixiEnv('picard', new VersionsExtension().picardVersion()) == 'picard: "3.4.0"'
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('samtools') })
-    def 'VersionsCommand.Samtools should output samtools: "1.23" in the samtools pixi environment'() {
+    def 'samtoolsVersion() should output samtools: "1.23" in the samtools pixi environment'() {
         expect:
-            runInPixiEnv('samtools', VersionsCommand.Samtools) == 'samtools: "1.23"'
+            runInPixiEnv('samtools', new VersionsExtension().samtoolsVersion()) == 'samtools: "1.23"'
     }
 
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('splitcode') })
-    def 'VersionsCommand.Splitcode should output splitcode: "0.31.6" in the splitcode pixi environment'() {
+    def 'splitcodeVersion() should output splitcode: "0.31.6" in the splitcode pixi environment'() {
         expect:
-            runInPixiEnv('splitcode', VersionsCommand.Splitcode) == 'splitcode: "0.31.6"'
+            runInPixiEnv('splitcode', new VersionsExtension().splitcodeVersion()) == 'splitcode: "0.31.6"'
     }
 }

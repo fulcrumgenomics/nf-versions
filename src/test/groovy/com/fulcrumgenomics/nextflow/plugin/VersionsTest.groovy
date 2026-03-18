@@ -140,45 +140,45 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'VersionsCommand.Bcftools should contain the bcftools version command'() {
+    def 'bcftoolsVersion() should contain the bcftools version command'() {
         expect:
-            VersionsCommand.Bcftools.contains('bcftools --version')
+            new VersionsExtension().bcftoolsVersion().contains('bcftools --version')
     }
 
-    def 'VersionsCommand.BwaMem2 should contain the bwa-mem2 version command'() {
+    def 'bwaMem2Version() should contain the bwa-mem2 version command'() {
         expect:
-            VersionsCommand.BwaMem2.contains('bwa-mem2 version')
+            new VersionsExtension().bwaMem2Version().contains('bwa-mem2 version')
     }
 
-    def 'VersionsCommand.Fgbio should contain the fgbio version command'() {
+    def 'fgbioVersion() should contain the fgbio version command'() {
         expect:
-            VersionsCommand.Fgbio.contains('fgbio --version')
+            new VersionsExtension().fgbioVersion().contains('fgbio --version')
     }
 
-    def 'VersionsCommand.Falco should contain the falco version command'() {
+    def 'falcoVersion() should contain the falco version command'() {
         expect:
-            VersionsCommand.Falco.contains('falco --version')
+            new VersionsExtension().falcoVersion().contains('falco --version')
     }
 
-    def 'VersionsCommand.Picard should contain the picard version command'() {
+    def 'picardVersion() should contain the picard version command'() {
         expect:
-            VersionsCommand.Picard.contains('picard ViewSam')
+            new VersionsExtension().picardVersion().contains('picard ViewSam')
     }
 
-    def 'VersionsCommand.Samtools should contain the samtools version command'() {
+    def 'samtoolsVersion() should contain the samtools version command'() {
         expect:
-            VersionsCommand.Samtools.contains('samtools --version')
+            new VersionsExtension().samtoolsVersion().contains('samtools --version')
     }
 
-    def 'VersionsCommand.Splitcode should contain the splitcode version command'() {
+    def 'splitcodeVersion() should contain the splitcode version command'() {
         expect:
-            VersionsCommand.Splitcode.contains('splitcode --version')
+            new VersionsExtension().splitcodeVersion().contains('splitcode --version')
     }
 
-    def 'VersionsCommand.pyPackageVersion should contain the package name and importlib.metadata'() {
+    def 'pyPackageVersion() should contain the package name and importlib.metadata'() {
         expect:
-            VersionsCommand.pyPackageVersion('cutadapt').contains('cutadapt')
-            VersionsCommand.pyPackageVersion('cutadapt').contains('importlib.metadata')
+            new VersionsExtension().pyPackageVersion('cutadapt').contains('cutadapt')
+            new VersionsExtension().pyPackageVersion('cutadapt').contains('importlib.metadata')
     }
 
     def 'pyPackageVersion() should return a bash command string containing the package name'() {
@@ -194,22 +194,12 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
-    def 'VersionsCommand.pyPackageVersion should reject package names containing shell meta-characters'() {
+    def 'pyPackageVersion() should reject package names containing shell meta-characters'() {
         when:
-            VersionsCommand.pyPackageVersion(name)
+            new VersionsExtension().pyPackageVersion(name)
         then:
             thrown(IllegalArgumentException)
         where:
             name << ['pkg; rm -rf /', 'pkg$(evil)', 'pkg`evil`', 'pkg|evil', 'pkg>out', 'pkg\nevil']
-    }
-
-    def 'VersionsCommand.indent should prepend spaces to each line'() {
-        expect:
-            VersionsCommand.indent("a\nb", 4) == "    a\n    b"
-    }
-
-    def 'VersionsCommand.indent should use two spaces by default'() {
-        expect:
-            VersionsCommand.indent("line") == "  line"
     }
 }
