@@ -6,20 +6,22 @@
 
 Collect CLI tool version information from Nextflow processes and collate it for [MultiQC](https://multiqc.info/).
 
-## Overview
+## Summary
 
 Version strings are bash `echo` commands designed for use with Nextflow's `eval` output directive.
 They produce YAML-formatted lines that MultiQC can read directly.
 These helpers avoid the need to continuously and verbosely specify version strings in both script and stub blocks (see an [example here](https://github.com/nf-core/fastquorum/blob/e6414c99ef5eef47a4ac3f124962e3dc5c21ab4b/modules/local/fgbio/fastqtobam/main.nf#L46-L61)).
 Contributions for new tool version support are greatly appreciated!
 
-## Quickstart
+## Get Started
 
 Add the plugin to your Nextflow config:
 
 ```nextflow
 plugins { id 'nf-versions' }
 ```
+
+## Examples
 
 ### Version Functions in Nextflow Processes
 
@@ -110,3 +112,8 @@ workflow {
 ## Development and Testing
 
 See the [contributing guide](./CONTRIBUTING.md) for more information.
+
+## License
+
+This plugin is published under the  MIT license.
+Copyright © 2026 Fulcrum Genomics LLC.
