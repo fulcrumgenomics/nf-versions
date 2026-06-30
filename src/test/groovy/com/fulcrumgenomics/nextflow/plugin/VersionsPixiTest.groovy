@@ -75,4 +75,57 @@ class VersionsPixiTest extends Specification {
         expect:
             runInPixiEnv('splitcode', new VersionsExtension().splitcodeVersion()) == 'splitcode: "0.31.6"'
     }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('bedtools') })
+    def 'bedtoolsVersion() should output bedtools: "2.31.1" in the bedtools pixi environment'() {
+        expect:
+            runInPixiEnv('bedtools', new VersionsExtension().bedtoolsVersion()) == 'bedtools: "2.31.1"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('bwa') })
+    def 'bwaVersion() should output bwa: "0.7.19-r1273" in the bwa pixi environment'() {
+        expect:
+            runInPixiEnv('bwa', new VersionsExtension().bwaVersion()) == 'bwa: "0.7.19-r1273"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('fastp') })
+    def 'fastpVersion() should output fastp: "1.3.3" in the fastp pixi environment'() {
+        expect:
+            runInPixiEnv('fastp', new VersionsExtension().fastpVersion()) == 'fastp: "1.3.3"'
+    }
+
+    // The fastqc-rs 0.3.4 conda package ships a binary that self-reports 0.3.3, so we assert the
+    // binary's own reported version rather than the package version.
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('fastqc-rs') })
+    def 'fastqcRsVersion() should output fastqc-rs: "0.3.3" in the fastqc-rs pixi environment'() {
+        expect:
+            runInPixiEnv('fastqc-rs', new VersionsExtension().fastqcRsVersion()) == 'fastqc-rs: "0.3.3"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('mosdepth') })
+    def 'mosdepthVersion() should output mosdepth: "0.3.14" in the mosdepth pixi environment'() {
+        expect:
+            runInPixiEnv('mosdepth', new VersionsExtension().mosdepthVersion()) == 'mosdepth: "0.3.14"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('revtag') })
+    def 'revtagVersion() should output revtag: "1.0.0" in the revtag pixi environment'() {
+        expect:
+            runInPixiEnv('revtag', new VersionsExtension().revtagVersion()) == 'revtag: "1.0.0"'
+    }
+
+    // The sambamba 1.0.1 build only runs reliably on linux-64 (it segfaults on macOS, including
+    // osx-64 under Rosetta), so its pixi environment is restricted to linux-64 and this test is
+    // skipped wherever that environment is absent.
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('sambamba') })
+    def 'sambambaVersion() should output sambamba: "1.0.1" in the sambamba pixi environment'() {
+        expect:
+            runInPixiEnv('sambamba', new VersionsExtension().sambambaVersion()) == 'sambamba: "1.0.1"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('ichorcna') })
+    def 'rLibraryVersion("ichorCNA") should output ichorCNA: "0.5.1" in the ichorcna pixi environment'() {
+        expect:
+            runInPixiEnv('ichorcna', new VersionsExtension().rLibraryVersion('ichorCNA')) == 'ichorCNA: "0.5.1"'
+    }
 }

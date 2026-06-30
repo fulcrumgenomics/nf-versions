@@ -14,12 +14,28 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'bcftools: "'\$( bcftools --version | head -n1 | sed -e 's/bcftools //g' )'"'
     """.stripIndent()
 
+    private static final String Bedtools = """
+        echo 'bedtools: "'\$( bedtools --version | sed -e 's/bedtools v//g' )'"'
+    """.stripIndent()
+
+    private static final String Bwa = """
+        echo 'bwa: "'\$( bwa 2>&1 | sed -n 's/^Version: //p' )'"'
+    """.stripIndent()
+
     private static final String BwaMem2 = """
         echo 'bwa-mem2: "'\$( bwa-mem2 version )'"'
     """.stripIndent()
 
     private static final String Falco = """
         echo 'falco: "'\$( falco --version | sed -e 's/falco //g' )'"'
+    """.stripIndent()
+
+    private static final String Fastp = """
+        echo 'fastp: "'\$( fastp --version 2>&1 | sed -e 's/fastp //g' )'"'
+    """.stripIndent()
+
+    private static final String FastqcRs = """
+        echo 'fastqc-rs: "'\$( fqc --version 2>&1 | sed -e 's/fastqc-rs //g' )'"'
     """.stripIndent()
 
     private static final String Fgbio = """
@@ -30,8 +46,20 @@ class VersionsExtension extends PluginExtensionPoint {
         )'"'
     """.stripIndent()
 
+    private static final String Mosdepth = """
+        echo 'mosdepth: "'\$( mosdepth --version | sed -e 's/mosdepth //g' )'"'
+    """.stripIndent()
+
     private static final String Picard = """
         echo 'picard: "'\$( picard ViewSam --version true 2>&1 | grep -v 'cannot change locale' | sed -e 's/Version://g' )'"'
+    """.stripIndent()
+
+    private static final String Revtag = """
+        echo 'revtag: "'\$( revtag --version | sed -e 's/revtag //g' )'"'
+    """.stripIndent()
+
+    private static final String Sambamba = """
+        echo 'sambamba: "'\$( sambamba --version 2>&1 | sed -n 's/^sambamba //p' | head -n1 )'"'
     """.stripIndent()
 
     private static final String Samtools = """
@@ -49,6 +77,14 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String bcftoolsVersion() { return Bcftools }
 
+    /** Bash command to return the version of bedtools. */
+    @Function
+    String bedtoolsVersion() { return Bedtools }
+
+    /** Bash command to return the version of bwa. */
+    @Function
+    String bwaVersion() { return Bwa }
+
     /** Bash command to return the version of bwa-mem2. */
     @Function
     String bwaMem2Version() { return BwaMem2 }
@@ -57,13 +93,33 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String falcoVersion() { return Falco }
 
+    /** Bash command to return the version of fastp. */
+    @Function
+    String fastpVersion() { return Fastp }
+
+    /** Bash command to return the version of fastqc-rs. */
+    @Function
+    String fastqcRsVersion() { return FastqcRs }
+
     /** Bash command to return the version of fgbio. */
     @Function
     String fgbioVersion() { return Fgbio }
 
+    /** Bash command to return the version of mosdepth. */
+    @Function
+    String mosdepthVersion() { return Mosdepth }
+
     /** Bash command to return the version of picard. */
     @Function
     String picardVersion() { return Picard }
+
+    /** Bash command to return the version of revtag. */
+    @Function
+    String revtagVersion() { return Revtag }
+
+    /** Bash command to return the version of sambamba. */
+    @Function
+    String sambambaVersion() { return Sambamba }
 
     /** Bash command to return the version of samtools. */
     @Function
@@ -89,6 +145,25 @@ class VersionsExtension extends PluginExtensionPoint {
         }
         return """
             echo '${packageName}: "'\$( python3 -c 'import sys; from importlib.metadata import version; print(version(sys.argv[1]))' ${packageName} 2>&1 )'"'
+        """.stripIndent()
+    }
+
+    /**
+     * Returns a bash command that emits the version of an R library using packageVersion().
+     * The output is formatted as a YAML string: {@code library-name: "x.y.z"}.
+     *
+     * @param libraryName the installed R library name (e.g. {@code "ichorCNA"})
+     * @return a bash command string suitable for use in a Nextflow process {@code eval} directive
+     */
+    @Function
+    String rLibraryVersion(String libraryName) {
+        if (!libraryName.matches(/[A-Za-z0-9._-]+/)) {
+            throw new IllegalArgumentException(
+                "Invalid R library name '${libraryName}': only letters, digits, hyphens, underscores, and dots are allowed."
+            )
+        }
+        return """
+            echo '${libraryName}: "'\$( Rscript -e 'cat(as.character(packageVersion(commandArgs(trailingOnly=TRUE)[1])))' ${libraryName} 2>&1 )'"'
         """.stripIndent()
     }
 
