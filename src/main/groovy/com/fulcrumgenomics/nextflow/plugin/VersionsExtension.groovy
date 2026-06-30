@@ -133,6 +133,11 @@ class VersionsExtension extends PluginExtensionPoint {
      * Returns a bash command that emits the version of a Python package using importlib.metadata.
      * The output is formatted as a YAML string: {@code package-name: "x.y.z"}.
      *
+     * Interpreter stderr is discarded so that a missing package (or any other interpreter error)
+     * yields {@code package-name: ""} rather than error text. Nextflow runs an {@code eval} output
+     * inline inside a double-quoted {@code bash -c "..."}, so any captured stderr containing shell
+     * metacharacters would otherwise break that command's parse and fail the task.
+     *
      * @param packageName the importlib-resolvable distribution name (e.g. {@code "cutadapt"})
      * @return a bash command string suitable for use in a Nextflow process {@code eval} directive
      */
@@ -144,13 +149,18 @@ class VersionsExtension extends PluginExtensionPoint {
             )
         }
         return """
-            echo '${packageName}: "'\$( python3 -c 'import sys; from importlib.metadata import version; print(version(sys.argv[1]))' ${packageName} 2>&1 )'"'
+            echo '${packageName}: "'\$( python3 -c 'import sys; from importlib.metadata import version; print(version(sys.argv[1]))' ${packageName} 2>/dev/null )'"'
         """.stripIndent()
     }
 
     /**
      * Returns a bash command that emits the version of an R library using packageVersion().
      * The output is formatted as a YAML string: {@code library-name: "x.y.z"}.
+     *
+     * Interpreter stderr is discarded so that a missing library (or any other interpreter error)
+     * yields {@code library-name: ""} rather than error text. Nextflow runs an {@code eval} output
+     * inline inside a double-quoted {@code bash -c "..."}, so any captured stderr containing shell
+     * metacharacters would otherwise break that command's parse and fail the task.
      *
      * @param libraryName the installed R library name (e.g. {@code "ichorCNA"})
      * @return a bash command string suitable for use in a Nextflow process {@code eval} directive
@@ -163,7 +173,7 @@ class VersionsExtension extends PluginExtensionPoint {
             )
         }
         return """
-            echo '${libraryName}: "'\$( Rscript -e 'cat(as.character(packageVersion(commandArgs(trailingOnly=TRUE)[1])))' ${libraryName} 2>&1 )'"'
+            echo '${libraryName}: "'\$( Rscript -e 'cat(as.character(packageVersion(commandArgs(trailingOnly=TRUE)[1])))' ${libraryName} 2>/dev/null )'"'
         """.stripIndent()
     }
 
