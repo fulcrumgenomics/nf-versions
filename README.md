@@ -64,7 +64,7 @@ process ALIGN {
 
 ### Custom Python Libraries and Tools
 
-Use `pyPackageVersion()` for custom Python tools or libraries:
+Use `pyPackageVersion()` for custom Python tools or libraries. If the package is not installed the helper emits `secret_sauce_lib: ""` rather than failing the task:
 
 ```nextflow
 include { pyPackageVersion } from 'plugin/nf-versions'
@@ -82,7 +82,7 @@ process SECRET_SAUCE {
 
 ### Custom R Libraries
 
-Use `rLibraryVersion()` for R libraries, resolved with `packageVersion()`:
+Use `rLibraryVersion()` for R libraries, resolved with `packageVersion()`. If the library is not installed the helper emits `ichorCNA: ""` rather than failing the task:
 
 ```nextflow
 include { rLibraryVersion } from 'plugin/nf-versions'

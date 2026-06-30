@@ -263,4 +263,35 @@ class VersionsTest extends Dsl2Spec {
         where:
             name << ['pkg; rm -rf /', 'pkg$(evil)', 'pkg`evil`', 'pkg|evil', 'pkg>out', 'pkg\nevil']
     }
+
+    def 'rLibraryVersion() should contain the library name and packageVersion command'() {
+        expect:
+            new VersionsExtension().rLibraryVersion('ichorCNA').contains('ichorCNA')
+            new VersionsExtension().rLibraryVersion('ichorCNA').contains('packageVersion')
+    }
+
+    def 'rLibraryVersion() should reject library names containing shell meta-characters'() {
+        when:
+            new VersionsExtension().rLibraryVersion(name)
+        then:
+            thrown(IllegalArgumentException)
+        where:
+            name << ['lib; rm -rf /', 'lib$(evil)', 'lib`evil`', 'lib|evil', 'lib>out', 'lib\nevil']
+    }
+
+    def 'pyPackageVersion() should discard interpreter stderr rather than merge it into the captured output'() {
+        when:
+            def command = new VersionsExtension().pyPackageVersion('cutadapt')
+        then:
+            command.contains('2>/dev/null')
+            !command.contains('2>&1')
+    }
+
+    def 'rLibraryVersion() should discard interpreter stderr rather than merge it into the captured output'() {
+        when:
+            def command = new VersionsExtension().rLibraryVersion('ichorCNA')
+        then:
+            command.contains('2>/dev/null')
+            !command.contains('2>&1')
+    }
 }
