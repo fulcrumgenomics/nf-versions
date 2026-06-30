@@ -175,6 +175,67 @@ class VersionsTest extends Dsl2Spec {
             new VersionsExtension().splitcodeVersion().contains('splitcode --version')
     }
 
+    def 'bedtoolsVersion() should contain the bedtools version command'() {
+        expect:
+            new VersionsExtension().bedtoolsVersion().contains('bedtools --version')
+    }
+
+    def 'bwaVersion() should contain the bwa version command'() {
+        expect:
+            new VersionsExtension().bwaVersion().contains('bwa 2>&1')
+    }
+
+    def 'fastpVersion() should contain the fastp version command'() {
+        expect:
+            new VersionsExtension().fastpVersion().contains('fastp --version')
+    }
+
+    def 'fastqcRsVersion() should contain the fqc version command'() {
+        expect:
+            new VersionsExtension().fastqcRsVersion().contains('fqc --version')
+    }
+
+    def 'mosdepthVersion() should contain the mosdepth version command'() {
+        expect:
+            new VersionsExtension().mosdepthVersion().contains('mosdepth --version')
+    }
+
+    def 'revtagVersion() should contain the revtag version command'() {
+        expect:
+            new VersionsExtension().revtagVersion().contains('revtag --version')
+    }
+
+    def 'sambambaVersion() should contain the sambamba version command'() {
+        expect:
+            new VersionsExtension().sambambaVersion().contains('sambamba --version')
+    }
+
+    def 'revtagVersion() should return a bash command string for revtag'() {
+        when:
+            String SCRIPT = '''
+                include { revtagVersion } from 'plugin/nf-versions'
+                channel.of(revtagVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('revtag')
+            result.val == Channel.STOP
+    }
+
+    def 'sambambaVersion() should return a bash command string for sambamba'() {
+        when:
+            String SCRIPT = '''
+                include { sambambaVersion } from 'plugin/nf-versions'
+                channel.of(sambambaVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('sambamba')
+            result.val == Channel.STOP
+    }
+
     def 'pyPackageVersion() should contain the package name and importlib.metadata'() {
         expect:
             new VersionsExtension().pyPackageVersion('cutadapt').contains('cutadapt')

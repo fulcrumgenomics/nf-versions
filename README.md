@@ -43,15 +43,22 @@ process ALIGN {
 <details>
 <summary><b>Click to see all Supported Tools</b></summary>
 
-| Plugin Function     | Tool                                                 |
-| ---                 | ---                                                  |
-| `bcftoolsVersion()` | [bcftools](https://samtools.github.io/bcftools/)     |
-| `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)     |
-| `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)       |
-| `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)    |
-| `picardVersion()`   | [picard](https://broadinstitute.github.io/picard/)   |
-| `samtoolsVersion()` | [samtools](https://www.htslib.org/)                  |
-| `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode) |
+| Plugin Function     | Tool                                                  |
+| ---                 | ---                                                   |
+| `bcftoolsVersion()` | [bcftools](https://samtools.github.io/bcftools/)      |
+| `bedtoolsVersion()` | [bedtools](https://bedtools.readthedocs.io/)          |
+| `bwaVersion()`      | [bwa](https://github.com/lh3/bwa)                     |
+| `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)      |
+| `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)        |
+| `fastpVersion()`    | [fastp](https://github.com/OpenGene/fastp)            |
+| `fastqcRsVersion()` | [fastqc-rs](https://github.com/fxwiegand/fastqc-rs)   |
+| `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)     |
+| `mosdepthVersion()` | [mosdepth](https://github.com/brentp/mosdepth)        |
+| `picardVersion()`   | [picard](https://broadinstitute.github.io/picard/)    |
+| `revtagVersion()`   | [revtag](https://github.com/clintval/revtag)          |
+| `sambambaVersion()` | [sambamba](https://github.com/biod/sambamba)          |
+| `samtoolsVersion()` | [samtools](https://www.htslib.org/)                   |
+| `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode)  |
 
 </details>
 
@@ -69,6 +76,24 @@ process SECRET_SAUCE {
     script:
     """
     secret-sauce.py ...
+    """
+}
+```
+
+### Custom R Libraries
+
+Use `rLibraryVersion()` for R libraries, resolved with `packageVersion()`:
+
+```nextflow
+include { rLibraryVersion } from 'plugin/nf-versions'
+
+process RUN_ICHORCNA {
+    output:
+    eval({rLibraryVersion("ichorCNA")}), topic: "versions"
+
+    script:
+    """
+    runIchorCNA.R ...
     """
 }
 ```
