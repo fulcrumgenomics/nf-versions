@@ -190,6 +190,11 @@ class VersionsTest extends Dsl2Spec {
             new VersionsExtension().fastpVersion().contains('fastp --version')
     }
 
+    def 'fastqcVersion() should contain the fastqc version command'() {
+        expect:
+            new VersionsExtension().fastqcVersion().contains('fastqc --version')
+    }
+
     def 'fastqcRsVersion() should contain the fqc version command'() {
         expect:
             new VersionsExtension().fastqcRsVersion().contains('fqc --version')
@@ -233,6 +238,19 @@ class VersionsTest extends Dsl2Spec {
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
         then:
             (result.val as String).contains('sambamba')
+            result.val == Channel.STOP
+    }
+
+    def 'fastqcVersion() should return a bash command string for fastqc'() {
+        when:
+            String SCRIPT = '''
+                include { fastqcVersion } from 'plugin/nf-versions'
+                channel.of(fastqcVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('fastqc')
             result.val == Channel.STOP
     }
 

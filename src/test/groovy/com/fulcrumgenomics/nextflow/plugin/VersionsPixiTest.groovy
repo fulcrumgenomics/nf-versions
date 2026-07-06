@@ -94,6 +94,12 @@ class VersionsPixiTest extends Specification {
             runInPixiEnv('fastp', new VersionsExtension().fastpVersion()) == 'fastp: "1.3.3"'
     }
 
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('fastqc') })
+    def 'fastqcVersion() should output fastqc: "0.12.1" in the fastqc pixi environment'() {
+        expect:
+            runInPixiEnv('fastqc', new VersionsExtension().fastqcVersion()) == 'fastqc: "0.12.1"'
+    }
+
     // The fastqc-rs 0.3.4 conda package ships a binary that self-reports 0.3.3, so we assert the
     // binary's own reported version rather than the package version.
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('fastqc-rs') })

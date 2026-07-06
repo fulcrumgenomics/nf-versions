@@ -51,6 +51,7 @@ process ALIGN {
 | `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)      |
 | `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)        |
 | `fastpVersion()`    | [fastp](https://github.com/OpenGene/fastp)            |
+| `fastqcVersion()`   | [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
 | `fastqcRsVersion()` | [fastqc-rs](https://github.com/fxwiegand/fastqc-rs)   |
 | `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)     |
 | `mosdepthVersion()` | [mosdepth](https://github.com/brentp/mosdepth)        |

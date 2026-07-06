@@ -31,6 +31,9 @@ falco = { version = "==1.2.5", channel = "bioconda" }
 [feature.fastp.dependencies]
 fastp = { version = "==1.3.3", channel = "bioconda" }
 
+[feature.fastqc.dependencies]
+fastqc = { version = "==0.12.1", channel = "bioconda" }
+
 [feature.fastqc-rs.dependencies]
 fastqc-rs = { version = "==0.3.4", channel = "bioconda" }
 
@@ -69,6 +72,7 @@ bwa = { features = ["bwa"] }
 bwa-mem2 = { features = ["bwa-mem2"] }
 falco = { features = ["falco"] }
 fastp = { features = ["fastp"] }
+fastqc = { features = ["fastqc"] }
 fastqc-rs = { features = ["fastqc-rs"] }
 fgbio = { features = ["fgbio"] }
 ichorcna = { features = ["ichorcna"] }
