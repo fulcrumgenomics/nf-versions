@@ -34,6 +34,10 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'fastp: "'\$( fastp --version 2>&1 | sed -e 's/fastp //g' )'"'
     """.stripIndent()
 
+    private static final String Fastqc = """
+        echo 'fastqc: "'\$( fastqc --version | sed -e 's/FastQC v//g' )'"'
+    """.stripIndent()
+
     private static final String FastqcRs = """
         echo 'fastqc-rs: "'\$( fqc --version 2>&1 | sed -e 's/fastqc-rs //g' )'"'
     """.stripIndent()
@@ -96,6 +100,10 @@ class VersionsExtension extends PluginExtensionPoint {
     /** Bash command to return the version of fastp. */
     @Function
     String fastpVersion() { return Fastp }
+
+    /** Bash command to return the version of fastqc. */
+    @Function
+    String fastqcVersion() { return Fastqc }
 
     /** Bash command to return the version of fastqc-rs. */
     @Function
