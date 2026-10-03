@@ -26,6 +26,22 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'bwa-mem2: "'\$( bwa-mem2 version )'"'
     """.stripIndent()
 
+    private static final String BwaMem3 = """
+        echo 'bwa-mem3: "'\$( bwa-mem3 version | head -n1 )'"'
+    """.stripIndent()
+
+    private static final String Chelae = """
+        echo 'chelae: "'\$( chelae --version | sed -e 's/chelae //g' )'"'
+    """.stripIndent()
+
+    private static final String Dupblaster = """
+        echo 'dupblaster: "'\$( dupblaster --version | sed -e 's/dupblaster //g' )'"'
+    """.stripIndent()
+
+    private static final String EnsemblVep = """
+        echo 'ensembl-vep: "'\$( vep --help | sed -n 's/^ *ensembl-vep *: *//p' )'"'
+    """.stripIndent()
+
     private static final String Falco = """
         echo 'falco: "'\$( falco --version | sed -e 's/falco //g' )'"'
     """.stripIndent()
@@ -50,6 +66,10 @@ class VersionsExtension extends PluginExtensionPoint {
         )'"'
     """.stripIndent()
 
+    private static final String Fgumi = """
+        echo 'fgumi: "'\$( fgumi --version | sed -e 's/fgumi //g' )'"'
+    """.stripIndent()
+
     private static final String Mosdepth = """
         echo 'mosdepth: "'\$( mosdepth --version | sed -e 's/mosdepth //g' )'"'
     """.stripIndent()
@@ -62,6 +82,10 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'revtag: "'\$( revtag --version | sed -e 's/revtag //g' )'"'
     """.stripIndent()
 
+    private static final String Riker = """
+        echo 'riker: "'\$( riker --version | sed -e 's/riker //g' )'"'
+    """.stripIndent()
+
     private static final String Sambamba = """
         echo 'sambamba: "'\$( sambamba --version 2>&1 | sed -n 's/^sambamba //p' | head -n1 )'"'
     """.stripIndent()
@@ -70,8 +94,20 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'samtools: "'\$( samtools --version | head -n1 | sed -e 's/samtools //g' )'"'
     """.stripIndent()
 
+    private static final String Snpeff = """
+        echo 'snpeff: "'\$( snpEff -version | head -n1 | cut -f2 )'"'
+    """.stripIndent()
+
+    private static final String Snpsift = """
+        echo 'snpsift: "'\$( SnpSift 2>&1 | sed -n 's/^SnpSift version \\([^ ]*\\).*/\\1/p' )'"'
+    """.stripIndent()
+
     private static final String Splitcode = """
         echo 'splitcode: "'\$( splitcode --version | sed -e 's/splitcode, version //g' | sed 's/\\.\$//' )'"'
+    """.stripIndent()
+
+    private static final String Vcfanno = """
+        echo 'vcfanno: "'\$( vcfanno 2>&1 | sed -n 's/^vcfanno version \\([^ ]*\\).*/\\1/p' )'"'
     """.stripIndent()
 
     @Override
@@ -93,6 +129,22 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String bwaMem2Version() { return BwaMem2 }
 
+    /** Bash command to return the version of bwa-mem3. */
+    @Function
+    String bwaMem3Version() { return BwaMem3 }
+
+    /** Bash command to return the version of chelae. */
+    @Function
+    String chelaeVersion() { return Chelae }
+
+    /** Bash command to return the version of dupblaster. */
+    @Function
+    String dupblasterVersion() { return Dupblaster }
+
+    /** Bash command to return the version of ensembl-vep. */
+    @Function
+    String ensemblVepVersion() { return EnsemblVep }
+
     /** Bash command to return the version of falco. */
     @Function
     String falcoVersion() { return Falco }
@@ -113,6 +165,10 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String fgbioVersion() { return Fgbio }
 
+    /** Bash command to return the version of fgumi. */
+    @Function
+    String fgumiVersion() { return Fgumi }
+
     /** Bash command to return the version of mosdepth. */
     @Function
     String mosdepthVersion() { return Mosdepth }
@@ -125,6 +181,10 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String revtagVersion() { return Revtag }
 
+    /** Bash command to return the version of riker. */
+    @Function
+    String rikerVersion() { return Riker }
+
     /** Bash command to return the version of sambamba. */
     @Function
     String sambambaVersion() { return Sambamba }
@@ -133,9 +193,21 @@ class VersionsExtension extends PluginExtensionPoint {
     @Function
     String samtoolsVersion() { return Samtools }
 
+    /** Bash command to return the version of snpEff. */
+    @Function
+    String snpeffVersion() { return Snpeff }
+
+    /** Bash command to return the version of SnpSift. */
+    @Function
+    String snpsiftVersion() { return Snpsift }
+
     /** Bash command to return the version of splitcode. */
     @Function
     String splitcodeVersion() { return Splitcode }
+
+    /** Bash command to return the version of vcfanno. */
+    @Function
+    String vcfannoVersion() { return Vcfanno }
 
     /**
      * Returns a bash command that emits the version of a Python package using importlib.metadata.

@@ -49,17 +49,26 @@ process ALIGN {
 | `bedtoolsVersion()` | [bedtools](https://bedtools.readthedocs.io/)          |
 | `bwaVersion()`      | [bwa](https://github.com/lh3/bwa)                     |
 | `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)      |
+| `bwaMem3Version()`  | [bwa-mem3](https://github.com/fg-labs/bwa-mem3)       |
+| `chelaeVersion()`   | [chelae](https://github.com/fulcrumgenomics/chelae)   |
+| `dupblasterVersion()` | [dupblaster](https://github.com/fulcrumgenomics/dupblaster) |
+| `ensemblVepVersion()` | [Ensembl VEP](https://github.com/Ensembl/ensembl-vep) |
 | `falcoVersion()`    | [falco](https://github.com/smithlabcode/falco)        |
 | `fastpVersion()`    | [fastp](https://github.com/OpenGene/fastp)            |
 | `fastqcVersion()`   | [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
 | `fastqcRsVersion()` | [fastqc-rs](https://github.com/fxwiegand/fastqc-rs)   |
 | `fgbioVersion()`    | [fgbio](https://github.com/fulcrumgenomics/fgbio)     |
+| `fgumiVersion()`    | [fgumi](https://github.com/fulcrumgenomics/fgumi)     |
 | `mosdepthVersion()` | [mosdepth](https://github.com/brentp/mosdepth)        |
 | `picardVersion()`   | [picard](https://broadinstitute.github.io/picard/)    |
 | `revtagVersion()`   | [revtag](https://github.com/clintval/revtag)          |
+| `rikerVersion()`    | [riker](https://github.com/fulcrumgenomics/riker)     |
 | `sambambaVersion()` | [sambamba](https://github.com/biod/sambamba)          |
 | `samtoolsVersion()` | [samtools](https://www.htslib.org/)                   |
+| `snpeffVersion()`   | [snpEff](https://pcingola.github.io/SnpEff/)          |
+| `snpsiftVersion()`  | [SnpSift](https://pcingola.github.io/SnpEff/)         |
 | `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode)  |
+| `vcfannoVersion()`  | [vcfanno](https://github.com/brentp/vcfanno)          |
 
 </details>
 

@@ -129,6 +129,61 @@ class VersionsPixiTest extends Specification {
             runInPixiEnv('sambamba', new VersionsExtension().sambambaVersion()) == 'sambamba: "1.0.1"'
     }
 
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('bwa-mem3') })
+    def 'bwaMem3Version() should output bwa-mem3: "0.13.0" in the bwa-mem3 pixi environment'() {
+        expect:
+            runInPixiEnv('bwa-mem3', new VersionsExtension().bwaMem3Version()) == 'bwa-mem3: "0.13.0"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('chelae') })
+    def 'chelaeVersion() should output chelae: "0.2.1" in the chelae pixi environment'() {
+        expect:
+            runInPixiEnv('chelae', new VersionsExtension().chelaeVersion()) == 'chelae: "0.2.1"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('dupblaster') })
+    def 'dupblasterVersion() should output dupblaster: "0.3.0" in the dupblaster pixi environment'() {
+        expect:
+            runInPixiEnv('dupblaster', new VersionsExtension().dupblasterVersion()) == 'dupblaster: "0.3.0"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('ensembl-vep') })
+    def 'ensemblVepVersion() should output ensembl-vep: "116.2" in the ensembl-vep pixi environment'() {
+        expect:
+            runInPixiEnv('ensembl-vep', new VersionsExtension().ensemblVepVersion()) == 'ensembl-vep: "116.2"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('fgumi') })
+    def 'fgumiVersion() should output fgumi: "0.7.0" in the fgumi pixi environment'() {
+        expect:
+            runInPixiEnv('fgumi', new VersionsExtension().fgumiVersion()) == 'fgumi: "0.7.0"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('riker') })
+    def 'rikerVersion() should output riker: "0.4.1" in the riker pixi environment'() {
+        expect:
+            runInPixiEnv('riker', new VersionsExtension().rikerVersion()) == 'riker: "0.4.1"'
+    }
+
+    // The snpeff and snpsift 5.4.0c conda packages self-report their version as 5.4c.
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('snpeff') })
+    def 'snpeffVersion() should output snpeff: "5.4c" in the snpeff pixi environment'() {
+        expect:
+            runInPixiEnv('snpeff', new VersionsExtension().snpeffVersion()) == 'snpeff: "5.4c"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('snpsift') })
+    def 'snpsiftVersion() should output snpsift: "5.4c" in the snpsift pixi environment'() {
+        expect:
+            runInPixiEnv('snpsift', new VersionsExtension().snpsiftVersion()) == 'snpsift: "5.4c"'
+    }
+
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('vcfanno') })
+    def 'vcfannoVersion() should output vcfanno: "0.3.9" in the vcfanno pixi environment'() {
+        expect:
+            runInPixiEnv('vcfanno', new VersionsExtension().vcfannoVersion()) == 'vcfanno: "0.3.9"'
+    }
+
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('ichorcna') })
     def 'rLibraryVersion("ichorCNA") should output ichorCNA: "0.5.1" in the ichorcna pixi environment'() {
         expect:
