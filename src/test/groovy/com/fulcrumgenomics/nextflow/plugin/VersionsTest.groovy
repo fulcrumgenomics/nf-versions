@@ -254,6 +254,168 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
+    def 'bwaMem3Version() should contain the bwa-mem3 version command'() {
+        expect:
+            new VersionsExtension().bwaMem3Version().contains('bwa-mem3 version')
+    }
+
+    def 'chelaeVersion() should contain the chelae version command'() {
+        expect:
+            new VersionsExtension().chelaeVersion().contains('chelae --version')
+    }
+
+    def 'dupblasterVersion() should contain the dupblaster version command'() {
+        expect:
+            new VersionsExtension().dupblasterVersion().contains('dupblaster --version')
+    }
+
+    def 'ensemblVepVersion() should contain the vep version command'() {
+        expect:
+            new VersionsExtension().ensemblVepVersion().contains('vep --help')
+    }
+
+    def 'fgumiVersion() should contain the fgumi version command'() {
+        expect:
+            new VersionsExtension().fgumiVersion().contains('fgumi --version')
+    }
+
+    def 'rikerVersion() should contain the riker version command'() {
+        expect:
+            new VersionsExtension().rikerVersion().contains('riker --version')
+    }
+
+    def 'snpeffVersion() should contain the snpEff version command'() {
+        expect:
+            new VersionsExtension().snpeffVersion().contains('snpEff -version')
+    }
+
+    def 'snpsiftVersion() should contain the SnpSift version command'() {
+        expect:
+            new VersionsExtension().snpsiftVersion().contains('SnpSift 2>&1')
+    }
+
+    def 'vcfannoVersion() should contain the vcfanno version command'() {
+        expect:
+            new VersionsExtension().vcfannoVersion().contains('vcfanno 2>&1')
+    }
+
+    def 'bwaMem3Version() should return a bash command string for bwa-mem3'() {
+        when:
+            String SCRIPT = '''
+                include { bwaMem3Version } from 'plugin/nf-versions'
+                channel.of(bwaMem3Version())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('bwa-mem3: "')
+            result.val == Channel.STOP
+    }
+
+    def 'chelaeVersion() should return a bash command string for chelae'() {
+        when:
+            String SCRIPT = '''
+                include { chelaeVersion } from 'plugin/nf-versions'
+                channel.of(chelaeVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('chelae: "')
+            result.val == Channel.STOP
+    }
+
+    def 'dupblasterVersion() should return a bash command string for dupblaster'() {
+        when:
+            String SCRIPT = '''
+                include { dupblasterVersion } from 'plugin/nf-versions'
+                channel.of(dupblasterVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('dupblaster: "')
+            result.val == Channel.STOP
+    }
+
+    def 'ensemblVepVersion() should return a bash command string for ensembl-vep'() {
+        when:
+            String SCRIPT = '''
+                include { ensemblVepVersion } from 'plugin/nf-versions'
+                channel.of(ensemblVepVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('ensembl-vep: "')
+            result.val == Channel.STOP
+    }
+
+    def 'fgumiVersion() should return a bash command string for fgumi'() {
+        when:
+            String SCRIPT = '''
+                include { fgumiVersion } from 'plugin/nf-versions'
+                channel.of(fgumiVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('fgumi: "')
+            result.val == Channel.STOP
+    }
+
+    def 'rikerVersion() should return a bash command string for riker'() {
+        when:
+            String SCRIPT = '''
+                include { rikerVersion } from 'plugin/nf-versions'
+                channel.of(rikerVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('riker: "')
+            result.val == Channel.STOP
+    }
+
+    def 'snpeffVersion() should return a bash command string for snpeff'() {
+        when:
+            String SCRIPT = '''
+                include { snpeffVersion } from 'plugin/nf-versions'
+                channel.of(snpeffVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('snpeff: "')
+            result.val == Channel.STOP
+    }
+
+    def 'snpsiftVersion() should return a bash command string for snpsift'() {
+        when:
+            String SCRIPT = '''
+                include { snpsiftVersion } from 'plugin/nf-versions'
+                channel.of(snpsiftVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('snpsift: "')
+            result.val == Channel.STOP
+    }
+
+    def 'vcfannoVersion() should return a bash command string for vcfanno'() {
+        when:
+            String SCRIPT = '''
+                include { vcfannoVersion } from 'plugin/nf-versions'
+                channel.of(vcfannoVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('vcfanno: "')
+            result.val == Channel.STOP
+    }
+
     def 'pyPackageVersion() should contain the package name and importlib.metadata'() {
         expect:
             new VersionsExtension().pyPackageVersion('cutadapt').contains('cutadapt')
