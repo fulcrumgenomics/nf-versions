@@ -91,6 +91,9 @@ snpsift = { version = "==5.4.0c", channel = "bioconda" }
 [feature.splitcode.dependencies]
 splitcode = { version = "==0.31.6", channel = "bioconda" }
 
+[feature.vartovcf.dependencies]
+vartovcf = { version = "==3.0.1", channel = "bioconda" }
+
 [feature.vcfanno.dependencies]
 vcfanno = { version = "==0.3.9", channel = "bioconda" }
 
@@ -120,4 +123,5 @@ samtools = { features = ["samtools"] }
 snpeff = { features = ["snpeff"] }
 snpsift = { features = ["snpsift"] }
 splitcode = { features = ["splitcode"] }
+vartovcf = { features = ["vartovcf"] }
 vcfanno = { features = ["vcfanno"] }

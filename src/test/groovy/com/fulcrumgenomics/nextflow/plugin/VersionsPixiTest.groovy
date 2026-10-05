@@ -178,6 +178,12 @@ class VersionsPixiTest extends Specification {
             runInPixiEnv('snpsift', new VersionsExtension().snpsiftVersion()) == 'snpsift: "5.4c"'
     }
 
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('vartovcf') })
+    def 'vartovcfVersion() should output vartovcf: "3.0.1" in the vartovcf pixi environment'() {
+        expect:
+            runInPixiEnv('vartovcf', new VersionsExtension().vartovcfVersion()) == 'vartovcf: "3.0.1"'
+    }
+
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('vcfanno') })
     def 'vcfannoVersion() should output vcfanno: "0.3.9" in the vcfanno pixi environment'() {
         expect:
