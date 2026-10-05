@@ -294,6 +294,11 @@ class VersionsTest extends Dsl2Spec {
             new VersionsExtension().snpsiftVersion().contains('SnpSift 2>&1')
     }
 
+    def 'vartovcfVersion() should contain the vartovcf version command'() {
+        expect:
+            new VersionsExtension().vartovcfVersion().contains('vartovcf --version')
+    }
+
     def 'vcfannoVersion() should contain the vcfanno version command'() {
         expect:
             new VersionsExtension().vcfannoVersion().contains('vcfanno 2>&1')
@@ -400,6 +405,19 @@ class VersionsTest extends Dsl2Spec {
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
         then:
             (result.val as String).contains('snpsift: "')
+            result.val == Channel.STOP
+    }
+
+    def 'vartovcfVersion() should return a bash command string for vartovcf'() {
+        when:
+            String SCRIPT = '''
+                include { vartovcfVersion } from 'plugin/nf-versions'
+                channel.of(vartovcfVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('vartovcf: "')
             result.val == Channel.STOP
     }
 

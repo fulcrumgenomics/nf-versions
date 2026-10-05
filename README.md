@@ -68,6 +68,7 @@ process ALIGN {
 | `snpeffVersion()`   | [snpEff](https://pcingola.github.io/SnpEff/)          |
 | `snpsiftVersion()`  | [SnpSift](https://pcingola.github.io/SnpEff/)         |
 | `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode)  |
+| `vartovcfVersion()` | [vartovcf](https://github.com/clintval/vartovcf)      |
 | `vcfannoVersion()`  | [vcfanno](https://github.com/brentp/vcfanno)          |
 
 </details>

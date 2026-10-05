@@ -106,6 +106,10 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'splitcode: "'\$( splitcode --version | sed -e 's/splitcode, version //g' | sed 's/\\.\$//' )'"'
     """.stripIndent()
 
+    private static final String Vartovcf = """
+        echo 'vartovcf: "'\$( vartovcf --version | sed -e 's/vartovcf //g' )'"'
+    """.stripIndent()
+
     private static final String Vcfanno = """
         echo 'vcfanno: "'\$( vcfanno 2>&1 | sed -n 's/^vcfanno version \\([^ ]*\\).*/\\1/p' )'"'
     """.stripIndent()
@@ -204,6 +208,10 @@ class VersionsExtension extends PluginExtensionPoint {
     /** Bash command to return the version of splitcode. */
     @Function
     String splitcodeVersion() { return Splitcode }
+
+    /** Bash command to return the version of vartovcf. */
+    @Function
+    String vartovcfVersion() { return Vartovcf }
 
     /** Bash command to return the version of vcfanno. */
     @Function
