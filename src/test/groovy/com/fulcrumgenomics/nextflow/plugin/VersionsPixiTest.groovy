@@ -178,6 +178,12 @@ class VersionsPixiTest extends Specification {
             runInPixiEnv('snpsift', new VersionsExtension().snpsiftVersion()) == 'snpsift: "5.4c"'
     }
 
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('somalier') })
+    def 'somalierVersion() should output somalier: "0.3.5" in the somalier pixi environment'() {
+        expect:
+            runInPixiEnv('somalier', new VersionsExtension().somalierVersion()) == 'somalier: "0.3.5"'
+    }
+
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('vartovcf') })
     def 'vartovcfVersion() should output vartovcf: "3.0.1" in the vartovcf pixi environment'() {
         expect:

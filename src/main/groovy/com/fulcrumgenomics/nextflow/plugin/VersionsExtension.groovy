@@ -102,6 +102,10 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'snpsift: "'\$( SnpSift 2>&1 | sed -n 's/^SnpSift version \\([^ ]*\\).*/\\1/p' )'"'
     """.stripIndent()
 
+    private static final String Somalier = """
+        echo 'somalier: "'\$( somalier 2>&1 | sed -n 's/^somalier version: //p' )'"'
+    """.stripIndent()
+
     private static final String Splitcode = """
         echo 'splitcode: "'\$( splitcode --version | sed -e 's/splitcode, version //g' | sed 's/\\.\$//' )'"'
     """.stripIndent()
@@ -204,6 +208,10 @@ class VersionsExtension extends PluginExtensionPoint {
     /** Bash command to return the version of SnpSift. */
     @Function
     String snpsiftVersion() { return Snpsift }
+
+    /** Bash command to return the version of somalier. */
+    @Function
+    String somalierVersion() { return Somalier }
 
     /** Bash command to return the version of splitcode. */
     @Function

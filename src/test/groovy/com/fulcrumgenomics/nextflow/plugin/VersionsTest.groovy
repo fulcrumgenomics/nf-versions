@@ -294,6 +294,11 @@ class VersionsTest extends Dsl2Spec {
             new VersionsExtension().snpsiftVersion().contains('SnpSift 2>&1')
     }
 
+    def 'somalierVersion() should contain the somalier version command'() {
+        expect:
+            new VersionsExtension().somalierVersion().contains('somalier 2>&1')
+    }
+
     def 'vartovcfVersion() should contain the vartovcf version command'() {
         expect:
             new VersionsExtension().vartovcfVersion().contains('vartovcf --version')
@@ -405,6 +410,19 @@ class VersionsTest extends Dsl2Spec {
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
         then:
             (result.val as String).contains('snpsift: "')
+            result.val == Channel.STOP
+    }
+
+    def 'somalierVersion() should return a bash command string for somalier'() {
+        when:
+            String SCRIPT = '''
+                include { somalierVersion } from 'plugin/nf-versions'
+                channel.of(somalierVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('somalier: "')
             result.val == Channel.STOP
     }
 
