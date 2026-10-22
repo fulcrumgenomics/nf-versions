@@ -88,6 +88,9 @@ snpeff = { version = "==5.4.0c", channel = "bioconda" }
 [feature.snpsift.dependencies]
 snpsift = { version = "==5.4.0c", channel = "bioconda" }
 
+[feature.somalier.dependencies]
+somalier = { version = "==0.3.5", channel = "bioconda" }
+
 [feature.splitcode.dependencies]
 splitcode = { version = "==0.31.6", channel = "bioconda" }
 
@@ -122,6 +125,7 @@ sambamba = { features = ["sambamba"] }
 samtools = { features = ["samtools"] }
 snpeff = { features = ["snpeff"] }
 snpsift = { features = ["snpsift"] }
+somalier = { features = ["somalier"] }
 splitcode = { features = ["splitcode"] }
 vartovcf = { features = ["vartovcf"] }
 vcfanno = { features = ["vcfanno"] }
