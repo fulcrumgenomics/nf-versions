@@ -45,6 +45,7 @@ process ALIGN {
 
 | Plugin Function     | Tool                                                  |
 | ---                 | ---                                                   |
+| `bambyVersion()`    | [bamby](https://github.com/clintval/bamby)            |
 | `bcftoolsVersion()` | [bcftools](https://samtools.github.io/bcftools/)      |
 | `bedtoolsVersion()` | [bedtools](https://bedtools.readthedocs.io/)          |
 | `bwaVersion()`      | [bwa](https://github.com/lh3/bwa)                     |
@@ -69,6 +70,7 @@ process ALIGN {
 | `snpsiftVersion()`  | [SnpSift](https://pcingola.github.io/SnpEff/)         |
 | `somalierVersion()` | [somalier](https://github.com/brentp/somalier)        |
 | `splitcodeVersion()`| [splitcode](https://github.com/salzmanlab/splitcode)  |
+| `unmuxVersion()`    | [unmux](https://github.com/clintval/unmux)            |
 | `vartovcfVersion()` | [vartovcf](https://github.com/clintval/vartovcf)      |
 | `vcfannoVersion()`  | [vcfanno](https://github.com/brentp/vcfanno)          |
 

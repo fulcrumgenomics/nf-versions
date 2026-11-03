@@ -254,6 +254,11 @@ class VersionsTest extends Dsl2Spec {
             result.val == Channel.STOP
     }
 
+    def 'bambyVersion() should contain the bamby version command'() {
+        expect:
+            new VersionsExtension().bambyVersion().contains('bamby --version')
+    }
+
     def 'bwaMem3Version() should contain the bwa-mem3 version command'() {
         expect:
             new VersionsExtension().bwaMem3Version().contains('bwa-mem3 version')
@@ -299,6 +304,11 @@ class VersionsTest extends Dsl2Spec {
             new VersionsExtension().somalierVersion().contains('somalier 2>&1')
     }
 
+    def 'unmuxVersion() should contain the unmux version command'() {
+        expect:
+            new VersionsExtension().unmuxVersion().contains('unmux --version')
+    }
+
     def 'vartovcfVersion() should contain the vartovcf version command'() {
         expect:
             new VersionsExtension().vartovcfVersion().contains('vartovcf --version')
@@ -307,6 +317,19 @@ class VersionsTest extends Dsl2Spec {
     def 'vcfannoVersion() should contain the vcfanno version command'() {
         expect:
             new VersionsExtension().vcfannoVersion().contains('vcfanno 2>&1')
+    }
+
+    def 'bambyVersion() should return a bash command string for bamby'() {
+        when:
+            String SCRIPT = '''
+                include { bambyVersion } from 'plugin/nf-versions'
+                channel.of(bambyVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('bamby: "')
+            result.val == Channel.STOP
     }
 
     def 'bwaMem3Version() should return a bash command string for bwa-mem3'() {
@@ -423,6 +446,19 @@ class VersionsTest extends Dsl2Spec {
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
         then:
             (result.val as String).contains('somalier: "')
+            result.val == Channel.STOP
+    }
+
+    def 'unmuxVersion() should return a bash command string for unmux'() {
+        when:
+            String SCRIPT = '''
+                include { unmuxVersion } from 'plugin/nf-versions'
+                channel.of(unmuxVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('unmux: "')
             result.val == Channel.STOP
     }
 

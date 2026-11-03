@@ -184,6 +184,12 @@ class VersionsPixiTest extends Specification {
             runInPixiEnv('somalier', new VersionsExtension().somalierVersion()) == 'somalier: "0.3.5"'
     }
 
+    @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('unmux') })
+    def 'unmuxVersion() should output unmux: "0.4.0" in the unmux pixi environment'() {
+        expect:
+            runInPixiEnv('unmux', new VersionsExtension().unmuxVersion()) == 'unmux: "0.4.0"'
+    }
+
     @IgnoreIf({ !VersionsPixiTest.isPixiEnvAvailable('vartovcf') })
     def 'vartovcfVersion() should output vartovcf: "3.0.1" in the vartovcf pixi environment'() {
         expect:
