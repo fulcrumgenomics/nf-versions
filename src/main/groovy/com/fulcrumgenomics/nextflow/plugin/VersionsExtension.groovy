@@ -10,6 +10,10 @@ import nextflow.plugin.extension.PluginExtensionPoint
 @CompileStatic
 class VersionsExtension extends PluginExtensionPoint {
 
+    private static final String Bamby = """
+        echo 'bamby: "'\$( bamby --version | sed -e 's/bamby //g' )'"'
+    """.stripIndent()
+
     private static final String Bcftools = """
         echo 'bcftools: "'\$( bcftools --version | head -n1 | sed -e 's/bcftools //g' )'"'
     """.stripIndent()
@@ -110,6 +114,10 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'splitcode: "'\$( splitcode --version | sed -e 's/splitcode, version //g' | sed 's/\\.\$//' )'"'
     """.stripIndent()
 
+    private static final String Unmux = """
+        echo 'unmux: "'\$( unmux --version | sed -e 's/unmux //g' )'"'
+    """.stripIndent()
+
     private static final String Vartovcf = """
         echo 'vartovcf: "'\$( vartovcf --version | sed -e 's/vartovcf //g' )'"'
     """.stripIndent()
@@ -120,6 +128,10 @@ class VersionsExtension extends PluginExtensionPoint {
 
     @Override
     protected void init(Session session) { }
+
+    /** Bash command to return the version of bamby. */
+    @Function
+    String bambyVersion() { return Bamby }
 
     /** Bash command to return the version of bcftools. */
     @Function
@@ -216,6 +228,10 @@ class VersionsExtension extends PluginExtensionPoint {
     /** Bash command to return the version of splitcode. */
     @Function
     String splitcodeVersion() { return Splitcode }
+
+    /** Bash command to return the version of unmux. */
+    @Function
+    String unmuxVersion() { return Unmux }
 
     /** Bash command to return the version of vartovcf. */
     @Function
