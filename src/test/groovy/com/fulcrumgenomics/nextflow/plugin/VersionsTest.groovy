@@ -264,6 +264,11 @@ class VersionsTest extends Dsl2Spec {
             new VersionsExtension().bwaMem3Version().contains('bwa-mem3 version')
     }
 
+    def 'chaffVersion() should contain the chaff version command'() {
+        expect:
+            new VersionsExtension().chaffVersion().contains('chaff --version')
+    }
+
     def 'chelaeVersion() should contain the chelae version command'() {
         expect:
             new VersionsExtension().chelaeVersion().contains('chelae --version')
@@ -342,6 +347,19 @@ class VersionsTest extends Dsl2Spec {
             def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
         then:
             (result.val as String).contains('bwa-mem3: "')
+            result.val == Channel.STOP
+    }
+
+    def 'chaffVersion() should return a bash command string for chaff'() {
+        when:
+            String SCRIPT = '''
+                include { chaffVersion } from 'plugin/nf-versions'
+                channel.of(chaffVersion())
+            '''
+        and:
+            def result = new MockScriptRunner([:]).setScript(SCRIPT).execute()
+        then:
+            (result.val as String).contains('chaff: "')
             result.val == Channel.STOP
     }
 

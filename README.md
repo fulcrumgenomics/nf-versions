@@ -51,6 +51,7 @@ process ALIGN {
 | `bwaVersion()`      | [bwa](https://github.com/lh3/bwa)                     |
 | `bwaMem2Version()`  | [bwa-mem2](https://github.com/bwa-mem2/bwa-mem2)      |
 | `bwaMem3Version()`  | [bwa-mem3](https://github.com/fg-labs/bwa-mem3)       |
+| `chaffVersion()`    | [chaff](https://github.com/clintval/chaff)            |
 | `chelaeVersion()`   | [chelae](https://github.com/fulcrumgenomics/chelae)   |
 | `dupblasterVersion()` | [dupblaster](https://github.com/fulcrumgenomics/dupblaster) |
 | `ensemblVepVersion()` | [Ensembl VEP](https://github.com/Ensembl/ensembl-vep) |
