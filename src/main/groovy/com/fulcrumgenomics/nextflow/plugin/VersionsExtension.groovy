@@ -34,6 +34,10 @@ class VersionsExtension extends PluginExtensionPoint {
         echo 'bwa-mem3: "'\$( bwa-mem3 version | head -n1 )'"'
     """.stripIndent()
 
+    private static final String Chaff = """
+        echo 'chaff: "'\$( chaff --version | sed -e 's/chaff //g' )'"'
+    """.stripIndent()
+
     private static final String Chelae = """
         echo 'chelae: "'\$( chelae --version | sed -e 's/chelae //g' )'"'
     """.stripIndent()
@@ -152,6 +156,10 @@ class VersionsExtension extends PluginExtensionPoint {
     /** Bash command to return the version of bwa-mem3. */
     @Function
     String bwaMem3Version() { return BwaMem3 }
+
+    /** Bash command to return the version of chaff. */
+    @Function
+    String chaffVersion() { return Chaff }
 
     /** Bash command to return the version of chelae. */
     @Function
